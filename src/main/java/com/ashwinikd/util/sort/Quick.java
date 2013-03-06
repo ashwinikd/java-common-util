@@ -1,5 +1,7 @@
 package com.ashwinikd.util.sort;
 
+import java.util.ArrayList;
+
 import com.ashwinikd.util.common.Shuffle;
 
 public class Quick
@@ -15,6 +17,11 @@ public class Quick
     {
         Shuffle.shuffle(array);
         qSort(array, 0, array.length - 1);
+    }
+    
+    public static <T extends Comparable<T>> void sort(ArrayList<T> list) {
+        Shuffle.shuffle(list);
+        qSort(list, 0, list.size() - 1);
     }
     
     private static <T extends Comparable<T>> void qSort(T[] array, int lo, int hi) {
@@ -87,6 +94,43 @@ public class Quick
         int tmp = array[j];
         array[j] = array[lo];
         array[lo] = tmp;
+        
+        return j;
+    }
+    
+    private static <T extends Comparable<T>> void qSort(ArrayList<T> array, int lo, int hi) {
+        if(lo == hi) return;
+        int pivot = qPartition(array, lo, hi);
+        if(pivot > lo)
+            qSort(array, lo, pivot - 1);
+        if(pivot < hi)
+            qSort(array, pivot + 1, hi);
+    }
+    
+    private static <T extends Comparable<T>> int qPartition(ArrayList<T> array, int lo, int hi) {
+        T pivot = array.get(lo);
+        int i = lo + 1;
+        int j = hi;
+        
+        while(i <= j) {
+            if(pivot.compareTo(array.get(i)) > 0) {
+                i++;
+                continue;
+            }
+            
+            if(pivot.compareTo(array.get(j)) <= 0) {
+                j--;
+                continue;
+            }
+            
+            T tmp = array.get(j);
+            array.set(j, array.get(i));
+            array.set(i, tmp);
+        }
+        
+        T tmp = array.get(j);
+        array.set(j, array.get(lo));
+        array.set(lo, tmp);
         
         return j;
     }

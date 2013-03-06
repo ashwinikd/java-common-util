@@ -43,6 +43,23 @@ public class Shuffle
         }
     }
     
+    public static <T> void shuffle(ArrayList<T> array) {
+        shuffle(array, array.size() - 1);
+    }
+    
+    public static <T> void shuffle(ArrayList<T> array, int lim) {
+        int k = 0;
+        T tmp;
+        Random rand = new Random();
+        
+        for(int i = 0; i < lim && i < array.size() - 1; i++) {
+            k = rand.nextInt(array.size() - i) + i;
+            tmp = array.get(k);
+            array.set(k, array.get(i));
+            array.set(i, tmp);
+        }
+    }
+    
     public static <T> T random(T[] array) {
         Random rand = new Random();
         return array[rand.nextInt(array.length)];
